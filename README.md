@@ -9,7 +9,7 @@ It allows the user to
     * title
     * due date
     * status as done or not
-    * project.
+    * project
 * display a collection of tasks by
     * due date
     * project  
