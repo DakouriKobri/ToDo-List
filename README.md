@@ -17,3 +17,6 @@ It allows the user to
 * remove tasks
 * load and save task list to data file
 * quit and restart the application with former state restored
+
+## UML Class Diagram
+![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/449edf31ad4395f2658af7379a60da9695040cec/Images/UML%20class%20diagram.png)
