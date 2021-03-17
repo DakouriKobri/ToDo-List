@@ -1,11 +1,16 @@
 # Compiled class file
 *.class
+# Idea directory
+.idea
 # Log file
 *.log
 # BlueJ files
 *.ctxt
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+# Ignore .obj files #
+*.obj
+*.mtl
 # Package Files #
 *.jar
 *.war
@@ -20,6 +25,3 @@ hs_err_pid*
 .gradle
 # Ignore Gradle build output directory
 build
-
-.DS_Store
- 
