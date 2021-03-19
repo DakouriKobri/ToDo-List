@@ -32,7 +32,7 @@ java -jar build/libs/ToDo-List-1.0-SNAPSHOT.jar
 ```
 
 ## Usage
-From the homepage, as seen in this following screenshot, you can start navigating through the ToDo-Li app.
+From the homepage, as seen in this following screenshot, you can start navigating through the ToDo-List app.
 ![Welcome page](Images/Welcome%20Page.png)
 
 ## UML Class Diagram
