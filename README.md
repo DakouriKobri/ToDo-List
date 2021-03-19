@@ -28,6 +28,7 @@ gradle run --console plain
 ## UML Class Diagram
 ![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/07702e3b0bc423878b1314960713fb906d101a11/Images/ToDo-List%20UML%20class%20diagram.png)
 
+
 ## Author and Acknowledgement
 
 Dakouri M. Kobri, with the gracious assistance of Nour Alhuda Almajni. This a project carried out as part of my training as software developer on the program 
@@ -36,5 +37,6 @@ Software Development Academy co-organized by KTH and Novare Potential in Stockho
 ## Project Status
 
 There is room for improvement.
+
 
 
