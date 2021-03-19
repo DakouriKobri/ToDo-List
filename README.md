@@ -19,4 +19,4 @@ It allows the user to
 * quit and restart the application with former state restored
 
 ## UML Class Diagram
-![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/449edf31ad4395f2658af7379a60da9695040cec/Images/UML%20class%20diagram.png)
+![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/07702e3b0bc423878b1314960713fb906d101a11/Images/ToDo-List%20UML%20class%20diagram.png)
