@@ -1,8 +1,8 @@
 
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import datastructure.Task;
+import datastructure.TaskList;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,12 +15,12 @@ import java.util.Scanner;
  * @author Dakouri Maurille-Constant Kobri
  * @version 1.0
  * @since 2021.03.09
- *
  */
 
 public class Menu {
     private Scanner scanner;
     private TaskList taskList;
+    private FileHandler fh;
     private String TABLE_HEADER = String.format(Task.TABLE_FORMAT, "DATE", "STATUS", "PROJECT", "TITLE");
 
     /**
@@ -28,14 +28,14 @@ public class Menu {
      */
     public Menu() {
         scanner = new Scanner(System.in);
-        //taskList = ReadFromFile.read();
-        this.displayMenu();
+        fh = new FileHandler();
+        taskList = fh.read();
     }
 
     /**
      * Prints a welcome message to the console and displays the menu.
      */
-    private void displayMenu() {
+    public void displayMenu() {
         int option = 0;
 
         while (option != 4) {
@@ -48,16 +48,13 @@ public class Menu {
                     ">> You have " + numberOfTasksDone + " tasks done and " + numberOfTasks + " tasks todo.");
             System.out.println(">>");
             System.out.println(">> What would you like to do?");
-            System.out.println(">> (1) See Task List (by date or project)");
-            System.out.println(">> (2) Create New Task.");
-            System.out.println(">> (3) Edit Task (update, mark as done, remove)");
+            System.out.println(">> (1) See datastructure.Task List (by date or project)");
+            System.out.println(">> (2) Create New datastructure.Task.");
+            System.out.println(">> (3) Edit datastructure.Task (update, mark as done, remove)");
             System.out.println(">> (4) Save and Quit.");
             System.out.print(">> ");
 
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-            }
+            option = validateInt(1, 4);
 
             switch (option) {
                 case 1 -> {
@@ -80,7 +77,7 @@ public class Menu {
                 case 4 -> this.saveAndQuit();
                 default -> {
                     System.out.println();
-                    System.out.println("Write a valid value.");
+                    System.out.println("Enter an option number!");
                 }
             }
 
@@ -96,28 +93,27 @@ public class Menu {
 
         while (option != 3) {
             System.out.println();
-            System.out.println(">> Pick an option:");
-            System.out.println(">> (1) Show Task List By due date.");
-            System.out.println(">> (2) Filter Task List By project.");
+            System.out.println(">> Select an option:");
+            System.out.println(">> (1) Show datastructure.Task list by Due Date.");
+            System.out.println(">> (2) Show datastructure.Task list by Project.");
             System.out.println(">> (3) Return to Menu.");
             System.out.print(">> ");
 
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-            }
+            option = validateInt(1, 3);
 
             switch (option) {
                 case 1 -> {
                     displayTaskListByDueDate();
-                    displayMenu();
+                    //displayMenu();
                 }
                 case 2 -> {
                     selectProject();
-                    displayMenu();
+                    //displayMenu();
                 }
-                case 3 -> displayMenu();
-                default -> System.out.println("Write a valid value.");
+                case 3 -> {
+                    return;
+                }
+                default -> System.out.println("Enter an option number.");
             }
 
             option = 0;
@@ -129,10 +125,11 @@ public class Menu {
      */
     private void displayTaskListByDueDate() {
         System.out.println();
-        System.out.println("Task List by due date");
+        System.out.println("datastructure.Task List by due date");
         System.out.println();
         System.out.println(TABLE_HEADER);
         List<Task> taskListSortedByDueDate = taskList.getTaskListByDueDate();
+
         for (Task t : taskListSortedByDueDate) {
             System.out.println(t);
         }
@@ -146,35 +143,30 @@ public class Menu {
         String selectedProject;
         int option = 0;
 
-        while (true) {
-            System.out.println();
-            System.out.println(">> Select a project:");
 
-            for (int i = 0; i < projects.size(); i++) {
-                System.out.println(">> (" + (i + 1) + ") " + projects.get(i));
-            }
-            System.out.print(">> ");
+        System.out.println();
+        System.out.println(">> Select a project:");
 
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-            }
-
-            if (option > 0 && option <= projects.size()) {
-                System.out.println();
-                System.out.println("Task List by project.");
-                System.out.println();
-                System.out.println(TABLE_HEADER);
-                selectedProject = projects.get(option - 1);
-                List<Task> selectedTask = taskList.getTaskListByProject(selectedProject);
-                for (Task t : selectedTask) {
-                    System.out.println(t);
-                }
-                break;
-            } else {
-                System.out.println("Write a valid value.");
-            }
+        for (int i = 0; i < projects.size(); i++) {
+            System.out.println(">> (" + (i + 1) + ") " + projects.get(i));
         }
+        System.out.print(">> ");
+
+        option = validateInt(1, projects.size());
+
+
+        System.out.println();
+        System.out.println("datastructure.Task List by project.");
+        System.out.println();
+        System.out.println(TABLE_HEADER);
+        selectedProject = projects.get(option - 1);
+        List<Task> selectedTask = taskList.getTaskListByProject(selectedProject);
+
+        for (Task t : selectedTask) {
+            System.out.println(t);
+        }
+
+
     }
 
     /**
@@ -184,54 +176,19 @@ public class Menu {
         System.out.println();
         System.out.println("Create a new task.");
         System.out.println();
+        String title = validateString("title");
 
-        boolean invalidTitle = true;
-        String title = null;
+        LocalDate localDate = validateDate();
+        if (localDate == null)
+            return;
 
-        while (invalidTitle) {
-            System.out.print("Add a title: ");
-            title = scanner.nextLine();
+        boolean status = false;
 
-            if (!title.isEmpty()) {
-                invalidTitle = false;
-            } else {
-                System.out.println("Write a valid title.");
-            }
-        }
-
-        boolean invalidDate = true;
-        LocalDate localDate = null;
-
-        while (invalidDate) {
-            System.out.print("Add a due date [yyyy-MM-dd]: ");
-            String dueDateStr = scanner.nextLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            try {
-                localDate = LocalDate.parse(dueDateStr, formatter);
-                invalidDate = false;
-            } catch (Exception e) {
-                System.out.println("Write a valid date.");
-            }
-        }
-
-        Boolean status = false;
-
-        boolean invalidProject = true;
-        String project = null;
-
-        while (invalidProject) {
-            System.out.print("Add a project: ");
-            project = scanner.nextLine();
-
-            if (!project.isEmpty()) {
-                invalidProject = false;
-            } else {
-                System.out.println("Add a valid project.");
-            }
-        }
+        String project = validateString("project");
 
         Task newTask = new Task(title, localDate, status, project);
         taskList.addTask(newTask);
+
     }
 
     /**
@@ -241,31 +198,24 @@ public class Menu {
         List<Task> tasks = taskList.getTaskList();
         int option = 0;
 
-        while (true) {
-            System.out.println();
-            System.out.println("Select task to edit:");
-            System.out.println();
-            System.out.println("       " + TABLE_HEADER);
 
-            for (int i = 0; i < tasks.size(); i++) {
-                Task task = tasks.get(i);
-                System.out.println(">> (" + (i + 1) + ") " + task.toString());
-            }
-            System.out.print(">> ");
+        System.out.println();
+        System.out.println("Select task to edit:");
+        System.out.println();
+        System.out.println("       " + TABLE_HEADER);
 
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-            }
-
-            if (option > 0 && option <= tasks.size()) {
-                Task selectedTask = tasks.get(option - 1);
-                selectOptionToEdit(selectedTask);
-                break;
-            } else {
-                System.out.println("Write a valid value.");
-            }
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            System.out.println(">> (" + (i + 1) + ") " + task.toString());
         }
+
+        System.out.print(">> ");
+
+        option = validateInt(1, tasks.size());
+
+        Task selectedTask = tasks.get(option - 1);
+        selectOptionToEdit(selectedTask);
+
     }
 
     /**
@@ -285,29 +235,26 @@ public class Menu {
             System.out.println(">> (4) Return to Menu");
             System.out.print(">> ");
 
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-            }
+            option = validateInt(1, 4);
 
             switch (option) {
                 case 1 -> {
                     updateTask(selectedTask);
-                    displayMenu();
+                    //displayMenu();
                 }
                 case 2 -> {
                     markAsDone(selectedTask);
-                    displayMenu();
+                    // displayMenu();
                 }
                 case 3 -> {
                     removeTask(selectedTask);
-                    displayMenu();
+                    // displayMenu();
                 }
-                case 4 -> displayMenu();
+                case 4 -> {
+                    return;
+                }
                 default -> System.out.println("Write a valid value.");
             }
-
-            option = 0;
         }
     }
 
@@ -321,37 +268,17 @@ public class Menu {
         System.out.println("Edit task.");
         System.out.println();
         System.out.println("Current title: " + selectedTask.getTitle());
-        System.out.print("Add a new title (Press Enter to skip): ");
-        String newTitle = scanner.nextLine();
-        if (!newTitle.isEmpty()) {
-            selectedTask.setTitle(newTitle);
-        }
+        //System.out.print("Add a new title: ");
 
-        boolean invalidDate = true;
+        String newTitle = validateString("new title");
 
-        while (invalidDate) {
-            System.out.println("Current due date: " + selectedTask.getDueDate());
-            System.out.print("Add a new due date [yyyy-MM-dd] (Press Enter to skip): ");
-            String dueDateStr = scanner.nextLine();
-            if (dueDateStr.isEmpty()) {
-                break;
-            }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            try {
-                LocalDate newDueDate = LocalDate.parse(dueDateStr, formatter);
-                selectedTask.setDueDate(newDueDate);
-                invalidDate = false;
-            } catch (Exception e) {
-                System.out.println("Enter a valid date.");
-            }
-        }
+        System.out.println("Current date: " + selectedTask.getDueDate());
+        LocalDate invalidDate = validateDate();
+        if (invalidDate == null)
+            return;
 
         System.out.println("Current project: " + selectedTask.getProject());
-        System.out.print("Create a new project (Press Enter to skip): ");
-        String newProject = scanner.nextLine();
-        if (!newProject.isEmpty()) {
-            selectedTask.setProject(newProject);
-        }
+        String newProject = validateString("new project");
     }
 
     /**
@@ -362,7 +289,7 @@ public class Menu {
     private void markAsDone(Task selectedTask) {
         taskList.setAsDone(selectedTask);
         System.out.println();
-        System.out.println("Task marked as DONE!");
+        System.out.println("datastructure.Task marked as DONE!");
     }
 
     /**
@@ -373,19 +300,77 @@ public class Menu {
     private void removeTask(Task selectedTask) {
         taskList.removeTask(selectedTask);
         System.out.println();
-        System.out.println("Task removed!");
+        System.out.println("datastructure.Task removed!");
     }
 
     /**
      * Saves the changes and close the application.
      */
     private void saveAndQuit() {
-        //WriteToFile.write(taskList);
+        fh.write(taskList);
         scanner.close();
 
         System.out.println();
-        System.out.println("Your ToDo-List is closed. Come back soon!");
+        System.out.println("Your ToDo-List is now closed. Come back check often!");
+        System.out.println("GOOD BYE!");
         System.exit(0);
     }
+
+    /* ============================================
+     */
+    public String validateString(String parameter) {
+        String data;
+        while (true) {
+            System.out.print("Add a " + parameter + "!");
+            data = scanner.nextLine();
+
+            if (!data.isEmpty()) {
+                return data;
+            } else {
+                System.out.println("Please, enter a valid " + parameter + "!");
+            }
+        }
+    }
+
+    public int validateInt(int min, int max) {
+        while (true) {
+            try {
+                System.out.println("Enter a number!");
+                int option = Integer.parseInt(scanner.nextLine());
+                if (option < min || option > max) {
+                    System.out.println("Please, enter number between: " + min + " and " + max);
+                    continue;
+                }
+
+                return option;
+            } catch (NumberFormatException e) {
+                System.out.println("Please, enter a correct number!");
+            }
+        }
+    }
+
+    public LocalDate validateDate() {
+
+        while (true) {
+            System.out.print("Add a new due date [yyyy-MM-dd] (Press Enter to skip): ");
+            String dueDateStr = scanner.nextLine();
+
+            if (dueDateStr.isEmpty()) {
+                return null;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            try {
+                LocalDate newDueDate = LocalDate.parse(dueDateStr, formatter);
+                return newDueDate;
+            } catch (Exception e) {
+                System.out.println("Enter a valid date.");
+            }
+        }
+
+    }
+
+
 }
 

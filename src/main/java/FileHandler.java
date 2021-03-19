@@ -1,68 +1,63 @@
+import datastructure.TaskList;
 
-//
-//import java.io.*;
-//
-//
-///**
-// * The class WriteToFile writes into the file that store the tasks list. It uses
-// * Gson to convert Java Objects into Json string.
-// *
-// * The class ReadFromFile reads from file that store the tasks list. It uses
-// * Gson to convert a Json string to an equivalent Java object.
-// *
-// * @author Dakouri Maurille-Constant Kobri
-// * @version 1.0
-// * @since 2021.03.09
-// *
-// */
-//public class FileHandler {
-//
-//    public void ReadFromFile {
-//
-//        /**
-//         * Read tasks from file "todoly.json"
-//         *
-//         * @return The list of tasks.
-//         */
-//       /*
-//        public static TaskList read() {
-//            File file = new File("todoly.json");
-//            TaskList taskList;
-//
-//            try {
-//                FileInputStream fileInputStream = new FileInputStream(file);
-//                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
-//               // JsonReader jsonReader = new JsonReader(inputStreamReader);
-//
-//               // taskList = gson.fromJson(jsonReader, TaskList.class);
-//            } catch (Exception e) {
-//                taskList = new TaskList();
-//            }
-//
-//            return taskList;
-//        }
-//        */
-//    }
-//
-//    public class WriteToFile {
-//
-//        /**
-//         * Save tasks to file "todoly.json"
-//         *
-//         * @param taskList The list of tasks.
-//         */
-//        public  void write(TaskList taskList) {
-//            File file = new File("todoly.json");
-//           // String json = gson.toJson(taskList);
-//
-//            try {
-//                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
-//                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-//               // bufferedWriter.write(json);
-//                bufferedWriter.close();
-//            } catch (Exception e) {
-//            }
-//        }
-//    }
-//
-//}
+import java.io.*;
+
+/**
+ * The class FileHandler stores task list in the file todoly.txt
+ * through the method write(),
+ * and accesses task list details through the method read().
+ *
+ * @author Dakouri Maurille-Constant Kobri
+ * @version 1.0
+ * @since 2021.03.09
+ */
+public class FileHandler {
+
+    /**
+     * Saves task list to file "todoly.txt"
+     *
+     * @param taskList The list of tasks.
+     */
+    public void write(TaskList taskList) {
+        try {
+            File file = new File("todoly.txt");
+            FileOutputStream fileStream = new FileOutputStream(file);
+            ObjectOutputStream writer = new ObjectOutputStream(fileStream);
+
+            writer.writeObject(taskList);
+            writer.close();
+            fileStream.close();
+
+        } catch (IOException e) {
+            System.out.println("Error writing to a file : " + e.toString());
+        }
+    }
+
+    /**
+     * Reads tasks from the file "todoly.txt"
+     *
+     * @return The list of tasks.
+     */
+    public TaskList read() {
+        TaskList taskList = new TaskList();
+        try {
+            File file = new File("todoly.txt");
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream reader = new ObjectInputStream(fileInputStream);
+
+            taskList = (TaskList) reader.readObject();
+
+            reader.close();
+            fileInputStream.close();
+
+        } catch (IOException e) {
+            System.out.println("problem with reading ... " + e.toString());
+        } catch (ClassNotFoundException e) {
+            System.out.println("the file has different data " + e.toString());
+        }
+
+        return taskList;
+
+    }
+
+}

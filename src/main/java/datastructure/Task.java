@@ -1,10 +1,11 @@
+package datastructure;
 
-
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * The class Task possesses four fields - title, due date, status, and project,
- * that, together with some included methods allows the instantiation of Task objets.
+ * The class datastructure.Task possesses four fields - title, due date, status, and project,
+ * that, together with some included methods allows the instantiation of datastructure.Task objets.
  *
  * @author Dakouri Maurille-Constant Kobri
  * @version 1.0
@@ -12,7 +13,8 @@ import java.time.LocalDate;
  *
  */
 
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task>, Serializable
+{
 
     private String title;
     private LocalDate dueDate;
@@ -21,8 +23,8 @@ public class Task implements Comparable<Task>{
     public static String TABLE_FORMAT = "%-10s  %-6s  %-20.20s  %-40.40s";
 
     /**
-     * Constructor through which the objects of class Task will be instantiated.
-     * It uses the four following Task class field as:
+     * Constructor through which the objects of class datastructure.Task will be instantiated.
+     * It uses the four following datastructure.Task class field as:
      *
      * @param title    task title
      * @param dueDate  task due date
@@ -59,7 +61,7 @@ public class Task implements Comparable<Task>{
      *
      * @return task status
      */
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 

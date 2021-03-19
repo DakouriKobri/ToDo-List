@@ -1,24 +1,28 @@
+package datastructure;
 
+import datastructure.Task;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The TaskList class allows the instantiation of a dynamic collection of tasks, and their manipulation.
+ * The datastructure.TaskList class allows the instantiation of a dynamic collection of tasks, and their manipulation.
  *
  * @author Dakouri Maurille-Constant Kobri
  * @version 1.0
  * @since 2021.03.09
  */
 
-public class TaskList {
+public class TaskList implements Serializable
+{
 
     private List<Task> taskList;
 
     /**
-     * Creates a list of objects of the class TaskList.
+     * Creates a list of objects of the class datastructure.TaskList.
      */
     public TaskList() {
         taskList = new ArrayList<Task>();
@@ -116,7 +120,7 @@ public class TaskList {
     public int getNumberOfTasksDone() {
         int numberOfTasksDone = 0;
         for (Task t : taskList) {
-            if (t.getStatus().equals(true)) {
+            if (t.getStatus()) {
                 numberOfTasksDone++;
             }
         }

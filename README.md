@@ -18,5 +18,23 @@ It allows the user to
 * load and save task list to data file
 * quit and restart the application with former state restored
 
+## Getting started
+This application can run directly via Gradle or JAR file. In the root folder, start the application with Gradle's run command.
+```bash
+gradle run --console plain
+```
+
+## Usage
 ## UML Class Diagram
-![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/449edf31ad4395f2658af7379a60da9695040cec/Images/UML%20class%20diagram.png)
+![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/07702e3b0bc423878b1314960713fb906d101a11/Images/ToDo-List%20UML%20class%20diagram.png)
+
+## Author and Acknowledgement
+
+Dakouri M. Kobri, with the gracious assistance of Nour Alhuda Almajni. This a project carried out as part of my training as software developer on the program 
+Software Development Academy co-organized by KTH and Novare Potential in Stockhom, Sweden (Feb 1 - May 14, 2021).
+
+## Project Status
+
+There is room for improvement.
+
+

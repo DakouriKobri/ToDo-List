@@ -15,8 +15,9 @@ public class Main {
      *
      * @param args array of characters sequence passed to the main method.
      */
-    public static void main(String[] args) {
-        //System.out.println("Helo");
+    public static void main(String[] args)
+    {
         Menu menu = new Menu();
+        menu.displayMenu();
     }
 }
