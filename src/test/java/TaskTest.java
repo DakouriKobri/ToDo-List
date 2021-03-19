@@ -1,6 +1,8 @@
 import datastructure.Task;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
 
 public class TaskTest {
@@ -13,7 +15,7 @@ public class TaskTest {
         Task task = new Task(title, dueDate, status, project);
         assertEquals(title, task.getTitle());
         assertEquals(dueDate, task.getDueDate());
-        assertEquals(status, task.getStatus());
-        assertEquals("datastructure.Task should have a project", project, task.getProject());
+        assertTrue(task.getStatus());
+        assertEquals(project, task.getProject());
     }
 }
