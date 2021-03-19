@@ -1,7 +1,8 @@
-
+package frontend;
 
 import datastructure.Task;
 import datastructure.TaskList;
+import fileHandler.FileHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * The class Menu  allows the user to see options, and make selection, and allows the code to then be executed
+ * The class frontend.Menu  allows the user to see options, and make selection, and allows the code to then be executed
  * according to the selection option.
  *
  * @author Dakouri Maurille-Constant Kobri
@@ -48,10 +49,10 @@ public class Menu {
                     ">> You have " + numberOfTasksDone + " tasks done and " + numberOfTasks + " tasks todo.");
             System.out.println(">>");
             System.out.println(">> What would you like to do?");
-            System.out.println(">> (1) See datastructure.Task List (by date or project)");
-            System.out.println(">> (2) Create New datastructure.Task.");
-            System.out.println(">> (3) Edit datastructure.Task (update, mark as done, remove)");
-            System.out.println(">> (4) Save and Quit.");
+            System.out.println(">> (1) See Task List (by date or project)");
+            System.out.println(">> (2) Create New Task.");
+            System.out.println(">> (3) Edit Task (update, mark as done, remove)");
+            System.out.println(">> (4) Save and Quit");
             System.out.print(">> ");
 
             option = validateInt(1, 4);
@@ -94,8 +95,8 @@ public class Menu {
         while (option != 3) {
             System.out.println();
             System.out.println(">> Select an option:");
-            System.out.println(">> (1) Show datastructure.Task list by Due Date.");
-            System.out.println(">> (2) Show datastructure.Task list by Project.");
+            System.out.println(">> (1) Show Task list by Due Date.");
+            System.out.println(">> (2) Show Task list by Project.");
             System.out.println(">> (3) Return to Menu.");
             System.out.print(">> ");
 
@@ -125,7 +126,7 @@ public class Menu {
      */
     private void displayTaskListByDueDate() {
         System.out.println();
-        System.out.println("datastructure.Task List by due date");
+        System.out.println("Task List by due date");
         System.out.println();
         System.out.println(TABLE_HEADER);
         List<Task> taskListSortedByDueDate = taskList.getTaskListByDueDate();
@@ -156,7 +157,7 @@ public class Menu {
 
 
         System.out.println();
-        System.out.println("datastructure.Task List by project.");
+        System.out.println("Task List by project.");
         System.out.println();
         System.out.println(TABLE_HEADER);
         selectedProject = projects.get(option - 1);
@@ -232,7 +233,7 @@ public class Menu {
             System.out.println(">> (1) Update (Title, Due date or Project)");
             System.out.println(">> (2) Mark as done");
             System.out.println(">> (3) Remove task");
-            System.out.println(">> (4) Return to Menu");
+            System.out.println(">> (4) Return to frontend.Menu");
             System.out.print(">> ");
 
             option = validateInt(1, 4);
@@ -289,7 +290,7 @@ public class Menu {
     private void markAsDone(Task selectedTask) {
         taskList.setAsDone(selectedTask);
         System.out.println();
-        System.out.println("datastructure.Task marked as DONE!");
+        System.out.println("Task marked as DONE!");
     }
 
     /**
@@ -300,7 +301,7 @@ public class Menu {
     private void removeTask(Task selectedTask) {
         taskList.removeTask(selectedTask);
         System.out.println();
-        System.out.println("datastructure.Task removed!");
+        System.out.println("Task removed!");
     }
 
     /**
@@ -316,8 +317,6 @@ public class Menu {
         System.exit(0);
     }
 
-    /* ============================================
-     */
     public String validateString(String parameter) {
         String data;
         while (true) {

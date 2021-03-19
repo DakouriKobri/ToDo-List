@@ -1,9 +1,11 @@
+package fileHandler;
+
 import datastructure.TaskList;
 
 import java.io.*;
 
 /**
- * The class FileHandler stores task list in the file todoly.txt
+ * The class fileHandler.FileHandler stores task list in the file todoly.txt
  * through the method write(),
  * and accesses task list details through the method read().
  *

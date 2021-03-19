@@ -19,12 +19,22 @@ It allows the user to
 * quit and restart the application with former state restored
 
 ## Getting started
-This application can run directly via Gradle or JAR file. In the root folder, start the application with Gradle's run command.
+This application can run via jar file. In the root folder, start the application with 
+Gradle's gradlew command.
+
 ```bash
-gradle run --console plain
+./gradlew jar
+```
+This will generate a jar file in *build/libs*, which can then be run in a Java environment.
+
+```bash
+java -jar build/libs/ToDo-List-1.0-SNAPSHOT.jar
 ```
 
 ## Usage
+From the homepage, as seen in this following screenshot, you can start navigating through the ToDo-Li app.
+![Welcome page](Images/Welcome%20Page.png)
+
 ## UML Class Diagram
 ![ToDo_List UML class diagram](https://github.com/DakouriKobri/ToDo-List/blob/07702e3b0bc423878b1314960713fb906d101a11/Images/ToDo-List%20UML%20class%20diagram.png)
 
