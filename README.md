@@ -37,7 +37,7 @@ From the homepage, as seen in this following screenshot, you can start navigatin
 ![Homepage image](Images/HomePage.png)
 
 ## UML Class Diagram
-![ToDo_List UML class diagram](Images/ToDo-List UML class diagram.png)
+![ToDo_List UML class diagram](Images/ToDo-List_UML_Class.png)
 
 
 ## Author and Acknowledgement
