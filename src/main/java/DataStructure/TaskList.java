@@ -1,6 +1,4 @@
-package datastructure;
-
-import datastructure.Task;
+package DataStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;

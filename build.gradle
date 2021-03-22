@@ -21,6 +21,6 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'frontend.Main'
+        attributes 'Main-Class': 'FrontEnd.Main'
     }
 }

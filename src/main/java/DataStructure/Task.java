@@ -1,11 +1,11 @@
-package datastructure;
+package DataStructure;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * The class datastructure.Task possesses four fields - title, due date, status, and project,
- * that, together with some included methods allows the instantiation of datastructure.Task objets.
+ * The class DataStructure.Task possesses four fields - title, due date, status, and project,
+ * that, together with some included methods allows the instantiation of DataStructure.Task objets.
  *
  * @author Dakouri Maurille-Constant Kobri
  * @version 1.0
@@ -23,8 +23,8 @@ public class Task implements Comparable<Task>, Serializable
     public static String TABLE_FORMAT = "%-10s  %-6s  %-20.20s  %-40.40s";
 
     /**
-     * Constructor through which the objects of class datastructure.Task will be instantiated.
-     * It uses the four following datastructure.Task class field as:
+     * Constructor through which the objects of class DataStructure.Task will be instantiated.
+     * It uses the four following DataStructure.Task class field as:
      *
      * @param title    task title
      * @param dueDate  task due date
@@ -92,23 +92,27 @@ public class Task implements Comparable<Task>, Serializable
         return String.format(TABLE_FORMAT, dueDate, statusToString, project, title);
     }
 
-    /**
+/*
+    */
+/**
      * Sets task title.
      *
      * @param title This is the title of task object.
-     */
+     *//*
+
     public void setTitle(String title) {
         this.title = title;
     }
+*/
 
-    /**
+/*    *//**
      * Sets task due date.
      *
      * @param dueDate This is the due date of the task.
-     */
+     *//*
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }
+    }*/
 
     /**
      * Sets task status
@@ -119,14 +123,18 @@ public class Task implements Comparable<Task>, Serializable
         this.status = status;
     }
 
-    /**
+/*
+    */
+/**
      * Sets task project.
      *
      * @param project This is the project of the task belongs to.
-     */
+     *//*
+
     public void setProject(String project) {
         this.project = project;
     }
+*/
 
     /**
      * Returns -1,0 or 1 depending on the result of the comparison.

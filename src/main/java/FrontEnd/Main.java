@@ -1,4 +1,4 @@
-package frontend;
+package FrontEnd;
 
 /**
  * The class main contains the main method by which the application starts running.

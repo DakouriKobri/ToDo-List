@@ -1,5 +1,5 @@
-import datastructure.Task;
-import datastructure.TaskList;
+import DataStructure.Task;
+import DataStructure.TaskList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

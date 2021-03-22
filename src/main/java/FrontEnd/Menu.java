@@ -1,8 +1,8 @@
-package frontend;
+package FrontEnd;
 
-import datastructure.Task;
-import datastructure.TaskList;
-import fileHandler.FileHandler;
+import DataStructure.Task;
+import DataStructure.TaskList;
+import FileHandler.FileHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +23,12 @@ public class Menu {
     private TaskList taskList;
     private FileHandler fh;
     private String TABLE_HEADER = String.format(Task.TABLE_FORMAT, "DATE", "STATUS", "PROJECT", "TITLE");
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+
 
     /**
      * Instantiates a scanner that reads text from the terminal.
@@ -44,16 +50,21 @@ public class Menu {
             int numberOfTasksDone = taskList.getNumberOfTasksDone();
 
             System.out.println();
-            System.out.println(">> Welcome to your ToDo-List.");
-            System.out.println(
-                    ">> You have " + numberOfTasksDone + " tasks done and " + numberOfTasks + " tasks todo.");
-            System.out.println(">>");
-            System.out.println(">> What would you like to do?");
-            System.out.println(">> (1) See Task List (by date or project)");
-            System.out.println(">> (2) Create New Task.");
-            System.out.println(">> (3) Edit Task (update, mark as done, remove)");
-            System.out.println(">> (4) Save and Quit");
-            System.out.print(">> ");
+            System.out.println(ANSI_BLUE + ">> Welcome to your ToDo-List." + ANSI_RESET);
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " You have " + ANSI_CYAN + numberOfTasksDone + " task(s) done" + ANSI_RESET
+                    + " and " + ANSI_RED  + numberOfTasks + " task(s) todo." + ANSI_RESET);
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET + "What would you like to do?" );
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "1" + ANSI_RESET + ") See Task List (by date or project)");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "2" + ANSI_RESET + ") Create New Task.");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "3" + ANSI_RESET + ") Edit Task (update, mark as done, remove)");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "4" + ANSI_RESET + ") Save and Quit");
+            System.out.print(ANSI_BLUE + ">>" + ANSI_RESET);
 
             option = validateInt(1, 4);
 
@@ -61,7 +72,7 @@ public class Menu {
                 case 1 -> {
                     if (taskList.isEmpty()) {
                         System.out.println();
-                        System.out.println("No tasks to show.");
+                        System.out.println(ANSI_BLUE + "No tasks to show." + ANSI_RESET);
                         break;
                     }
                     this.displayTaskList();
@@ -70,7 +81,7 @@ public class Menu {
                 case 3 -> {
                     if (taskList.isEmpty()) {
                         System.out.println();
-                        System.out.println("No tasks to edit.");
+                        System.out.println(ANSI_BLUE + "No tasks to edit." + ANSI_RESET);
                         break;
                     }
                     this.selectTaskToEdit();
@@ -78,7 +89,7 @@ public class Menu {
                 case 4 -> this.saveAndQuit();
                 default -> {
                     System.out.println();
-                    System.out.println("Enter an option number!");
+                    System.out.println(ANSI_BLUE + ">>" + ANSI_RESET + "Enter an option number! ");
                 }
             }
 
@@ -94,27 +105,28 @@ public class Menu {
 
         while (option != 3) {
             System.out.println();
-            System.out.println(">> Select an option:");
-            System.out.println(">> (1) Show Task list by Due Date.");
-            System.out.println(">> (2) Show Task list by Project.");
-            System.out.println(">> (3) Return to Menu.");
-            System.out.print(">> ");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET + " Select an option:");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "1" + ANSI_RESET + ") Show Task list by Due Date.");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "2" + ANSI_RESET + ") Show Task list by Project.");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "3" + ANSI_RESET + ") Return to Menu.");
+            System.out.print(ANSI_BLUE + ">>" + ANSI_RESET);
 
             option = validateInt(1, 3);
 
             switch (option) {
                 case 1 -> {
                     displayTaskListByDueDate();
-                    //displayMenu();
                 }
                 case 2 -> {
                     selectProject();
-                    //displayMenu();
                 }
                 case 3 -> {
                     return;
                 }
-                default -> System.out.println("Enter an option number.");
+                default -> System.out.println("Enter an option number ");
             }
 
             option = 0;
@@ -126,7 +138,7 @@ public class Menu {
      */
     private void displayTaskListByDueDate() {
         System.out.println();
-        System.out.println("Task List by due date");
+        System.out.println(ANSI_BLUE + "Task List by Due Date" + ANSI_RESET);
         System.out.println();
         System.out.println(TABLE_HEADER);
         List<Task> taskListSortedByDueDate = taskList.getTaskListByDueDate();
@@ -146,18 +158,19 @@ public class Menu {
 
 
         System.out.println();
-        System.out.println(">> Select a project:");
+        System.out.println(ANSI_BLUE + ">>" + ANSI_RESET + " Select a project ");
 
         for (int i = 0; i < projects.size(); i++) {
-            System.out.println(">> (" + (i + 1) + ") " + projects.get(i));
+            System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "("
+                    + ANSI_PURPLE + (i + 1) + ANSI_RESET + ") " + projects.get(i));
         }
-        System.out.print(">> ");
+        System.out.print(ANSI_BLUE + ">> " + ANSI_RESET);
 
         option = validateInt(1, projects.size());
 
 
         System.out.println();
-        System.out.println("Task List by project.");
+        System.out.println(ANSI_BLUE + "Task List by Project " + ANSI_RESET);
         System.out.println();
         System.out.println(TABLE_HEADER);
         selectedProject = projects.get(option - 1);
@@ -175,9 +188,9 @@ public class Menu {
      */
     private void createNewTask() {
         System.out.println();
-        System.out.println("Create a new task.");
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Create a new task  ");
         System.out.println();
-        String title = validateString("title");
+        String title = validateString("Title");
 
         LocalDate localDate = validateDate();
         if (localDate == null)
@@ -185,7 +198,7 @@ public class Menu {
 
         boolean status = false;
 
-        String project = validateString("project");
+        String project = validateString("Project");
 
         Task newTask = new Task(title, localDate, status, project);
         taskList.addTask(newTask);
@@ -201,16 +214,17 @@ public class Menu {
 
 
         System.out.println();
-        System.out.println("Select task to edit:");
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Select task to edit ");
         System.out.println();
         System.out.println("       " + TABLE_HEADER);
 
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            System.out.println(">> (" + (i + 1) + ") " + task.toString());
+            System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "("
+                    + ANSI_PURPLE + (i + 1) + ANSI_RESET + ") " + task.toString());
         }
 
-        System.out.print(">> ");
+        System.out.print(ANSI_BLUE + ">> " + ANSI_RESET);
 
         option = validateInt(1, tasks.size());
 
@@ -229,12 +243,16 @@ public class Menu {
 
         while (option != 4) {
             System.out.println();
-            System.out.println(">> What would you like to do?");
-            System.out.println(">> (1) Update (Title, Due date or Project)");
-            System.out.println(">> (2) Mark as done");
-            System.out.println(">> (3) Remove task");
-            System.out.println(">> (4) Return to frontend.Menu");
-            System.out.print(">> ");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET + "What would you like to do?");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "1" + ANSI_RESET + ") Update (Title, Due date or Project)");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "2" + ANSI_RESET + ") Mark as done");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "3" + ANSI_RESET + ") Remove task");
+            System.out.println(ANSI_BLUE + ">>" + ANSI_RESET
+                    + " (" + ANSI_PURPLE + "4" + ANSI_RESET + ") Return to Homepage Menu");
+            System.out.print(ANSI_BLUE + ">>" + ANSI_RESET );
 
             option = validateInt(1, 4);
 
@@ -254,7 +272,7 @@ public class Menu {
                 case 4 -> {
                     return;
                 }
-                default -> System.out.println("Write a valid value.");
+                default -> System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Write a valid value ");
             }
         }
     }
@@ -266,20 +284,19 @@ public class Menu {
      */
     private void updateTask(Task selectedTask) {
         System.out.println();
-        System.out.println("Edit task.");
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Edit task ");
         System.out.println();
-        System.out.println("Current title: " + selectedTask.getTitle());
-        //System.out.print("Add a new title: ");
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Current title: " + selectedTask.getTitle());
 
-        String newTitle = validateString("new title");
+        String newTitle = validateString("New Title");
 
-        System.out.println("Current date: " + selectedTask.getDueDate());
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Current date: " + selectedTask.getDueDate());
         LocalDate invalidDate = validateDate();
         if (invalidDate == null)
             return;
 
-        System.out.println("Current project: " + selectedTask.getProject());
-        String newProject = validateString("new project");
+        System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Current project: " + selectedTask.getProject());
+        String newProject = validateString("New Project");
     }
 
     /**
@@ -290,7 +307,7 @@ public class Menu {
     private void markAsDone(Task selectedTask) {
         taskList.setAsDone(selectedTask);
         System.out.println();
-        System.out.println("Task marked as DONE!");
+        System.out.println(ANSI_BLUE + "Task marked as DONE!"+ ANSI_RESET);
     }
 
     /**
@@ -301,7 +318,7 @@ public class Menu {
     private void removeTask(Task selectedTask) {
         taskList.removeTask(selectedTask);
         System.out.println();
-        System.out.println("Task removed!");
+        System.out.println(ANSI_BLUE + "Task removed!" + ANSI_RESET);
     }
 
     /**
@@ -312,46 +329,66 @@ public class Menu {
         scanner.close();
 
         System.out.println();
-        System.out.println("Your ToDo-List is now closed. Come back check often!");
-        System.out.println("GOOD BYE!");
+        System.out.println(ANSI_BLUE + "Your ToDo-List is now closed. Come back check often!");
+        System.out.println(ANSI_BLUE + "GOOD BYE!");
         System.exit(0);
     }
 
+    /**
+     * Verifies if a task already has a project or title and allows to add one if there is none.
+     * @param parameter parameter value to enter.
+     * @return parameter value (project or title).
+     */
     public String validateString(String parameter) {
         String data;
         while (true) {
-            System.out.print("Add a " + parameter + "!");
+            System.out.print(ANSI_BLUE + ">> " + ANSI_RESET + "Add a " + parameter + ": ");
             data = scanner.nextLine();
 
             if (!data.isEmpty()) {
                 return data;
+
             } else {
-                System.out.println("Please, enter a valid " + parameter + "!");
+                System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Please, enter a valid " + parameter + "!");
             }
         }
     }
 
+    /**
+     *This method makes sure the user types in an integer between the minimum and maximum inclusive.
+     * @param min minimum integer value to enter
+     * @param max maximum integer value to enter
+     * @return integer option number
+     */
+
     public int validateInt(int min, int max) {
         while (true) {
             try {
-                System.out.println("Enter a number!");
+                System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Enter a number ");
                 int option = Integer.parseInt(scanner.nextLine());
                 if (option < min || option > max) {
-                    System.out.println("Please, enter number between: " + min + " and " + max);
+                    System.out.println(ANSI_BLUE + ">> " + ANSI_RESET
+                            + "Please, enter number between: " + min + " and " + max );
                     continue;
                 }
 
                 return option;
             } catch (NumberFormatException e) {
-                System.out.println("Please, enter a correct number!");
+                System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Please, enter a correct number ");
             }
         }
     }
 
+    /**
+     * Allows the user to enter the date in the right format
+     *
+     * @return dueDate in [yyyy-MM-dd] String format.
+     */
     public LocalDate validateDate() {
 
         while (true) {
-            System.out.print("Add a new due date [yyyy-MM-dd] (Press Enter to skip): ");
+            System.out.print(ANSI_BLUE + ">> " + ANSI_RESET
+                    + "Add a new due date [yyyy-MM-dd] (Press Enter to skip) ");
             String dueDateStr = scanner.nextLine();
 
             if (dueDateStr.isEmpty()) {
@@ -361,10 +398,9 @@ public class Menu {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             try {
-                LocalDate newDueDate = LocalDate.parse(dueDateStr, formatter);
-                return newDueDate;
+                return LocalDate.parse(dueDateStr, formatter);
             } catch (Exception e) {
-                System.out.println("Enter a valid date.");
+                System.out.println(ANSI_BLUE + ">> " + ANSI_RESET + "Enter a valid date! ");
             }
         }
 

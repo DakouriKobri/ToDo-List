@@ -1,6 +1,6 @@
-package fileHandler;
+package FileHandler;
 
-import datastructure.TaskList;
+import DataStructure.TaskList;
 
 import java.io.*;
 
@@ -52,10 +52,12 @@ public class FileHandler {
             reader.close();
             fileInputStream.close();
 
-        } catch (IOException e) {
-            System.out.println("problem with reading ... " + e.toString());
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             System.out.println("the file has different data " + e.toString());
+        }
+        catch (IOException e) {
+            System.out.println("problem with reading ... " + e.toString());
         }
 
         return taskList;
